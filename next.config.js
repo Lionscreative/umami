@@ -37,15 +37,15 @@ module.exports = {
           }
         ]
       },
-      {
-        source: `/(.*\\.js)`,
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=2592000', // 30 days
-          },
-        ],
-      },
+      // {
+      //   source: `/(.*\\.js)`,
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: 'public, max-age=2592000', // 30 days
+      //     },
+      //   ],
+      // },
     ];
   },
 };

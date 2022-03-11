@@ -16,6 +16,8 @@ export default async (req, res) => {
     const user = { user_id, username, is_admin };
     const token = await createSecureToken(user);
 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
     return ok(res, { token, user });
   }
 
