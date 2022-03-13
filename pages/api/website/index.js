@@ -1,9 +1,11 @@
 import { updateWebsite, createWebsite, getWebsiteById } from 'lib/queries';
-import { useAuth } from 'lib/middleware';
+import { useAuth, useCors } from 'lib/middleware';
 import { uuid, getRandomChars } from 'lib/crypto';
 import { ok, unauthorized, methodNotAllowed } from 'lib/response';
 
 export default async (req, res) => {
+  await useCors(req, res);
+
   await useAuth(req, res);
 
   const { user_id, is_admin } = req.auth;

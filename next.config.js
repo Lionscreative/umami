@@ -21,7 +21,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: '*',
+        source: '/:path*',
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
@@ -29,23 +29,23 @@ module.exports = {
           },
           {
             key: 'Access-Control-Allow-Headers',
-            value: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+            value: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
           },
           {
             key: 'Access-Control-Allow-Methods',
-            value: 'PUT, POST, PATCH, DELETE, GET'
-          }
-        ]
+            value: 'PUT, POST, PATCH, DELETE, GET',
+          },
+        ],
       },
-      // {
-      //   source: `/(.*\\.js)`,
-      //   headers: [
-      //     {
-      //       key: 'Cache-Control',
-      //       value: 'public, max-age=2592000', // 30 days
-      //     },
-      //   ],
-      // },
+      {
+        source: `/(.*\\.js)`,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000', // 30 days
+          },
+        ],
+      },
     ];
   },
 };

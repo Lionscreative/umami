@@ -1,8 +1,10 @@
 import { checkPassword, createSecureToken } from 'lib/crypto';
+import { useCors } from 'lib/middleware';
 import { getAccountByUsername } from 'lib/queries';
 import { ok, unauthorized, badRequest } from 'lib/response';
 
 export default async (req, res) => {
+  await useCors(req, res);
   const { username, password } = req.body;
 
   if (!username || !password) {
