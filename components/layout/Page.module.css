@@ -3,5 +3,8 @@
   display: flex;
   flex-direction: column;
   padding: 0 30px;
-  background: var(--gray50);
+
+  /* Needed in iFrame on Kleap */
+  background-color: white;
+  /* background: var(--gray50); */
 }

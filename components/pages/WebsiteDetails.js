@@ -109,7 +109,11 @@ export default function WebsiteDetails({ websiteId }) {
   }
 
   if (!data) {
-    return null;
+    return (
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <p>Constructing analytics data 🛠🚧 ...</p>
+      </div>
+    );
   }
 
   return (
