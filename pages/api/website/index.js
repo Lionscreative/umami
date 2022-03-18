@@ -1,4 +1,5 @@
-import { updateWebsite, createWebsite, getWebsiteById } from 'lib/queries';
+/* eslint-disable import/no-anonymous-default-export */
+import { updateWebsite, createWebsite, getWebsiteById, getWebsiteByDomain } from 'lib/queries';
 import { useAuth, useCors } from 'lib/middleware';
 import { uuid, getRandomChars } from 'lib/crypto';
 import { ok, unauthorized, methodNotAllowed } from 'lib/response';
@@ -33,11 +34,18 @@ export default async (req, res) => {
 
       return ok(res);
     } else {
-      const website_uuid = uuid();
-      const share_id = enable_share_url ? getRandomChars(8) : null;
-      const website = await createWebsite(user_id, { website_uuid, name, domain, share_id });
+      // Add filter on domain to avoid multiple same domain to be added in database
+      if (domain) {
+        const found = await getWebsiteByDomain(domain);
 
-      return ok(res, website);
+        if (!found) {
+          const website_uuid = uuid();
+          const share_id = enable_share_url ? getRandomChars(8) : null;
+          const website = await createWebsite(user_id, { website_uuid, name, domain, share_id });
+
+          return ok(res, website);
+        }
+      }
     }
   }
 
