@@ -18,15 +18,16 @@ export default function PageviewsChart({
 }) {
   const intl = useIntl();
   const [theme] = useTheme();
-  const primaryColor = colord(THEME_COLORS[theme].primary);
+  const pageviewColor = colord(THEME_COLORS[theme].primary);
+  const uniqVisitorColor = colord(THEME_COLORS[theme].secondary);
   const colors = {
     views: {
-      background: primaryColor.alpha(0.4).toRgbString(),
-      border: primaryColor.alpha(0.5).toRgbString(),
+      background: pageviewColor.alpha(0.4).toRgbString(),
+      border: pageviewColor.alpha(0.5).toRgbString(),
     },
     visitors: {
-      background: primaryColor.alpha(0.6).toRgbString(),
-      border: primaryColor.alpha(0.7).toRgbString(),
+      background: uniqVisitorColor.alpha(0.6).toRgbString(),
+      border: uniqVisitorColor.alpha(0.7).toRgbString(),
     },
   };
 

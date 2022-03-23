@@ -11,10 +11,15 @@
   --gray800: #4b4b4b;
   --gray900: #2c2c2c;
 
-  --primary400: #2680eb;
+  /* --primary400: #2680eb;
   --primary500: #1473e6;
   --primary600: #0d66d0;
-  --primary700: #095aba;
+  --primary700: #095aba; */
+
+  --primary400: #ffbd12;
+  --primary500: #dfa209;
+  --primary600: #b98707;
+  --primary700: #8f6805;
 
   --font-size-xlarge: 36px;
   --font-size-large: 24px;
