@@ -1,4 +1,5 @@
-import { getWebsiteByShareId } from 'lib/queries';
+/* eslint-disable import/no-anonymous-default-export */
+import { getWebsiteByDomain } from 'lib/queries';
 import { ok, notFound, methodNotAllowed } from 'lib/response';
 import { createToken } from 'lib/crypto';
 
@@ -6,7 +7,7 @@ export default async (req, res) => {
   const { id } = req.query;
 
   if (req.method === 'GET') {
-    const website = await getWebsiteByShareId(id);
+    const website = await getWebsiteByDomain(id);
 
     if (website) {
       const websiteId = website.website_id;
