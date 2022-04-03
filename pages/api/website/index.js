@@ -44,6 +44,12 @@ export default async (req, res) => {
           const website = await createWebsite(user_id, { website_uuid, name, domain, share_id });
 
           return ok(res, website);
+        } else {
+          return ok(res, {
+            data: {
+              message: 'Website already registered.',
+            },
+          });
         }
       }
     }
