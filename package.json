@@ -7,7 +7,7 @@
   "homepage": "https://umami.is",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mikecao/umami.git"
+    "url": "https://github.com/umami-software/umami.git"
   },
   "scripts": {
     "dev": "next dev",
