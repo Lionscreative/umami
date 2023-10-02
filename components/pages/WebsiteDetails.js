@@ -20,9 +20,9 @@ import EventsTable from 'components/metrics/EventsTable';
 import EventsChart from 'components/metrics/EventsChart';
 import useFetch from 'hooks/useFetch';
 import usePageQuery from 'hooks/usePageQuery';
-import useShareToken from 'hooks/useShareToken';
-import { DEFAULT_ANIMATION_DURATION, TOKEN_HEADER } from 'lib/constants';
+import { DEFAULT_ANIMATION_DURATION } from 'lib/constants';
 import styles from './WebsiteDetails.module.css';
+import ScreenTable from 'components/metrics/ScreenTable';
 
 const views = {
   url: PagesTable,
@@ -30,16 +30,14 @@ const views = {
   browser: BrowsersTable,
   os: OSTable,
   device: DevicesTable,
+  screen: ScreenTable,
   country: CountriesTable,
   language: LanguagesTable,
   event: EventsTable,
 };
 
 export default function WebsiteDetails({ websiteId }) {
-  const shareToken = useShareToken();
-  const { data } = useFetch(`/website/${websiteId}`, {
-    headers: { [TOKEN_HEADER]: shareToken?.token },
-  });
+  const { data } = useFetch(`/website/${websiteId}`);
   const [chartLoaded, setChartLoaded] = useState(false);
   const [countryData, setCountryData] = useState();
   const [eventsData, setEventsData] = useState();
@@ -67,6 +65,10 @@ export default function WebsiteDetails({ websiteId }) {
     {
       label: <FormattedMessage id="metrics.referrers" defaultMessage="Referrers" />,
       value: resolve({ view: 'referrer' }),
+    },
+    {
+      label: <FormattedMessage id="metrics.screens" defaultMessage="Screens" />,
+      value: resolve({ view: 'screen' }),
     },
     {
       label: <FormattedMessage id="metrics.browsers" defaultMessage="Browsers" />,

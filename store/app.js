@@ -7,9 +7,9 @@ import {
   THEME_CONFIG,
   DEFAULT_WEBSITE_LIMIT,
 } from 'lib/constants';
-import { getItem } from 'lib/web';
+import { getItem, setItem } from 'lib/web';
 
-const defaultDashboardConfig = {
+export const defaultDashboardConfig = {
   showCharts: true,
   limit: DEFAULT_WEBSITE_LIMIT,
 };
@@ -42,6 +42,7 @@ export function setUser(user) {
 
 export function setDashboard(dashboard) {
   store.setState({ dashboard });
+  setItem(DASHBOARD_CONFIG, dashboard);
 }
 
 export default store;

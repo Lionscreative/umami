@@ -1,17 +1,16 @@
-/* eslint-disable import/no-anonymous-default-export */
-import { deleteWebsite, getWebsiteById } from 'lib/queries';
+import { deleteWebsite, getWebsiteById } from 'queries';
 import { methodNotAllowed, ok, unauthorized } from 'lib/response';
 import { allowQuery } from 'lib/auth';
 import { useCors } from 'lib/middleware';
 
 export default async (req, res) => {
-  await useCors(req, res);
-
   const { id } = req.query;
 
   const websiteId = +id;
 
   if (req.method === 'GET') {
+    await useCors(req, res);
+
     if (!(await allowQuery(req))) {
       return unauthorized(res);
     }
