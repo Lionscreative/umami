@@ -1,9 +1,12 @@
 import { updateWebsite, createWebsite, getWebsiteById } from 'queries';
-import { useAuth } from 'lib/middleware';
+import { useAuth, useCors } from 'lib/middleware';
 import { uuid, getRandomChars } from 'lib/crypto';
 import { ok, unauthorized, methodNotAllowed } from 'lib/response';
+import { getWebsiteByDomain } from 'lib/queries';
 
 export default async (req, res) => {
+  await useCors(req, res);
+
   await useAuth(req, res);
 
   const { user_id, is_admin } = req.auth;
@@ -31,11 +34,24 @@ export default async (req, res) => {
 
       return ok(res);
     } else {
-      const website_uuid = uuid();
-      const share_id = enable_share_url ? getRandomChars(8) : null;
-      const website = await createWebsite(user_id, { website_uuid, name, domain, share_id });
+      // Add filter on domain to avoid multiple same domain to be added in database
+      if (domain) {
+        const found = await getWebsiteByDomain(domain);
 
-      return ok(res, website);
+        if (!found) {
+          const website_uuid = uuid();
+          const share_id = enable_share_url ? getRandomChars(8) : null;
+          const website = await createWebsite(user_id, { website_uuid, name, domain, share_id });
+
+          return ok(res, website);
+        } else {
+          return ok(res, {
+            data: {
+              message: 'Website already registered.',
+            },
+          });
+        }
+      }
     }
   }
 

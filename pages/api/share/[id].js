@@ -1,8 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { getWebsiteByDomain } from 'lib/queries';
 import { ok, notFound, methodNotAllowed } from 'lib/response';
 import { createToken } from 'lib/crypto';
 import { useCors } from 'lib/middleware';
+import { getWebsiteByDomain } from 'lib/queries';
 
 export default async (req, res) => {
   await useCors(req, res);
