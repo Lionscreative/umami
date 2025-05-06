@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const messages = require('../lang/en-US.json');
+const messages = require('../src/lang/en-US.json');
 const ignore = require('../lang-ignore.json');
 
 const dir = path.resolve(__dirname, '../lang');
@@ -23,7 +24,7 @@ files.forEach(file => {
     keys.forEach(key => {
       const orig = messages[key];
       const check = lang[key];
-      const ignored = ignore[id]?.includes(key);
+      const ignored = ignore[id] === '*' || ignore[id]?.includes(key);
 
       if (!ignored && (!check || check === orig)) {
         console.log(chalk.redBright('*'), chalk.greenBright(`${key}:`), orig);
@@ -32,7 +33,7 @@ files.forEach(file => {
     });
 
     if (count === 0) {
-      console.log('**👍 Complete!**');
+      console.log('**Complete!**');
     }
   }
 });
