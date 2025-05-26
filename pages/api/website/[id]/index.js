@@ -8,8 +8,8 @@ export default async (req, res) => {
 
   const websiteId = +id;
 
+  await useCors(req, res);
   if (req.method === 'GET') {
-    await useCors(req, res);
 
     if (!(await allowQuery(req))) {
       return unauthorized(res);

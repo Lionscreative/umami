@@ -26,8 +26,9 @@ function getColumn(type) {
 }
 
 export default async (req, res) => {
+  await useCors(req, res);
+
   if (req.method === 'GET') {
-    await useCors(req, res);
 
     if (!(await allowQuery(req))) {
       return unauthorized(res);
