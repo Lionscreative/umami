@@ -2,10 +2,13 @@ import moment from 'moment-timezone';
 import { getPageviewStats } from 'lib/queries';
 import { ok, badRequest, methodNotAllowed, unauthorized } from 'lib/response';
 import { allowQuery } from 'lib/auth';
+import { useCors } from 'lib/middleware';
 
 const unitTypes = ['year', 'month', 'hour', 'day'];
 
 export default async (req, res) => {
+   await useCors(req, res);
+  
   if (req.method === 'GET') {
     if (!(await allowQuery(req))) {
       return unauthorized(res);

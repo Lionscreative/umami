@@ -1,6 +1,7 @@
 import { getPageviewMetrics, getSessionMetrics, getWebsiteById } from 'lib/queries';
 import { ok, methodNotAllowed, unauthorized, badRequest } from 'lib/response';
 import { allowQuery } from 'lib/auth';
+import { useCors } from 'lib/middleware';
 
 const sessionColumns = ['browser', 'os', 'device', 'country', 'language'];
 const pageviewColumns = ['url', 'referrer'];
@@ -25,6 +26,8 @@ function getColumn(type) {
 }
 
 export default async (req, res) => {
+   await useCors(req, res);
+  
   if (req.method === 'GET') {
     if (!(await allowQuery(req))) {
       return unauthorized(res);

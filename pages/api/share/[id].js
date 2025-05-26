@@ -2,8 +2,11 @@
 import { getWebsiteByDomain } from 'lib/queries';
 import { ok, notFound, methodNotAllowed } from 'lib/response';
 import { createToken } from 'lib/crypto';
+import { useCors } from 'lib/middleware';
 
 export default async (req, res) => {
+   await useCors(req, res);
+  
   const { id } = req.query;
 
   if (req.method === 'GET') {
