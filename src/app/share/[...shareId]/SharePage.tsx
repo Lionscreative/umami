@@ -1,15 +1,30 @@
 'use client';
 import WebsiteDetailsPage from '../../(main)/websites/[websiteId]/WebsiteDetailsPage';
-import { useShareToken } from '@/components/hooks';
+import { useLocale, useShareToken, useTheme } from '@/components/hooks';
 import Page from '@/components/layout/Page';
 import Header from './Header';
 import Footer from './Footer';
 import styles from './SharePage.module.css';
 import { WebsiteProvider } from '@/app/(main)/websites/[websiteId]/WebsiteProvider';
+import { useEffect } from 'react';
 
-export default function SharePage({ shareId }) {
+export default function SharePage({ shareId, contentOnly = false, mode, lang = 'fr' }) {
   const { shareToken, isLoading } = useShareToken(shareId);
+  const { saveTheme } = useTheme();
+  const { saveLocale } = useLocale();
+  useEffect(() => {
+    saveTheme(mode == 'dark' ? 'dark' : 'light');
+  }, [mode]);
 
+  useEffect(() => {
+    if (lang) {
+      if (lang === 'en') {
+        saveLocale('en-US');
+      } else if (lang === 'fr') {
+        saveLocale('fr-FR');
+      }
+    }
+  }, [lang]);
   if (isLoading || !shareToken) {
     return null;
   }
@@ -17,11 +32,11 @@ export default function SharePage({ shareId }) {
   return (
     <div className={styles.container}>
       <Page>
-        <Header />
+        {!contentOnly && <Header />}
         <WebsiteProvider websiteId={shareToken.websiteId}>
           <WebsiteDetailsPage websiteId={shareToken.websiteId} />
         </WebsiteProvider>
-        <Footer />
+        {!contentOnly && <Footer />}
       </Page>
     </div>
   );

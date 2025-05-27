@@ -3,7 +3,7 @@ import { canCreateTeamWebsite, canCreateWebsite } from '@/lib/auth';
 import { json, unauthorized } from '@/lib/response';
 import { uuid } from '@/lib/crypto';
 import { parseRequest } from '@/lib/request';
-import { createWebsite, getUserWebsites } from '@/queries';
+import { createWebsite, getUserWebsites, getWebsiteByDomain } from '@/queries';
 import { pagingParams } from '@/lib/schema';
 
 export async function GET(request: Request) {
@@ -53,7 +53,17 @@ export async function POST(request: Request) {
     data.userId = auth.user.id;
   }
 
-  const website = await createWebsite(data);
+  let website;
+
+  if (domain) {
+    website = await getWebsiteByDomain(domain);
+    if (!website) {
+        website = await createWebsite(data);
+    }
+  }else{
+    website = await createWebsite(data);
+  }
+
 
   return json(website);
 }

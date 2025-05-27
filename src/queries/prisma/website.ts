@@ -231,3 +231,11 @@ export async function deleteWebsite(
     return data;
   });
 }
+
+export async function getWebsiteByDomain(domain) {
+  return prisma.client.website.findFirst({
+    where: {
+      domain: domain,
+    },
+  });
+}

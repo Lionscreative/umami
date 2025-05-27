@@ -3,7 +3,7 @@ import { canUpdateWebsite, canDeleteWebsite, canViewWebsite } from '@/lib/auth';
 import { SHARE_ID_REGEX } from '@/lib/constants';
 import { parseRequest } from '@/lib/request';
 import { ok, json, unauthorized, serverError } from '@/lib/response';
-import { deleteWebsite, getWebsite, updateWebsite } from '@/queries';
+import { deleteWebsite, getWebsite, getWebsiteByDomain, updateWebsite } from '@/queries';
 
 export async function GET(
   request: Request,
@@ -21,7 +21,11 @@ export async function GET(
     return unauthorized();
   }
 
-  const website = await getWebsite(websiteId);
+  let website = await getWebsiteByDomain(websiteId);
+
+  if (!website) {
+    website = await getWebsite(websiteId);
+  }
 
   return json(website);
 }

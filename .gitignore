@@ -40,4 +40,5 @@ yarn-error.log*
 *.env.*
 
 *.dev.yml
-
+*.tar.gz
+*.bak

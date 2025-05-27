@@ -95,6 +95,15 @@ const headers = [
     headers: defaultHeaders,
   },
   {
+    source: '/share/:path*', // match your share URLs
+    headers: [
+      {
+        key: 'Content-Security-Policy',
+        value: "frame-ancestors 'self' http://localhost:3000 https://dev.kleap.co https://app.kleap.co",
+      },
+    ],
+  },
+  {
     source: TRACKER_SCRIPT,
     headers: trackerHeaders,
   },
